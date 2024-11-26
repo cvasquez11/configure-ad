@@ -86,7 +86,7 @@ This tutorial outlines the implementation of on-premises Active Directory within
 ![image](https://github.com/user-attachments/assets/fc0ec558-8e74-46f2-a325-1a5a3e43c3eb)
 
 <br />
-2. Choose Domain Configuration: In the wizard, select whether you are creating a new forest or adding the VM to an existing domain. If this is the first Domain Controller, choose Add a new forest and specify the Root domain name (example -> example.com).</p>
+2. Choose Domain Configuration: In the wizard, select whether you are creating a new forest or adding the VM to an existing domain. If this is the first Domain Controller, choose Add a new forest and specify the Root domain name (example -> company.com).</p>
 
 ![image](https://github.com/user-attachments/assets/04b10199-e756-4a26-ad60-38d75f560233)
 
@@ -107,12 +107,20 @@ This tutorial outlines the implementation of on-premises Active Directory within
 <h3>Step 4: Configure DNS Settings (VM)</h3>
 1. DNS Server Configuration: The VM should automatically configure itself as a DNS server when promoted to a Domain Controller. Ensure that DNS settings are properly configured so that the Domain Controller can resolve domain names within the network.</p>
 
-![image](https://github.com/user-attachments/assets/8e58a251-2da1-4e99-b702-122cb8cb32c8)
+![image](https://github.com/user-attachments/assets/9ede20ca-b619-4ea7-9241-7421668ce56a)
 
 <br />
 2. Check DNS Resolution: Test DNS resolution by pinging the domain name or checking the DNS server settings on the VM to ensure it’s properly handling domain name queries.</p>
 
-![image](https://github.com/user-attachments/assets/103d2e67-a5b4-44dd-b877-a7602c7fef5c)
+<br />
+(In PowerShell you would type -> ping domainname.com)
+
+![image](https://github.com/user-attachments/assets/ce07fc8f-c4fb-4bff-8bb2-66df85a521d9)
+
+<br />
+(Verifying you receive a response)
+
+![image](https://github.com/user-attachments/assets/11bebb93-12b4-425a-a202-4a7e00d2ab95)
 
 <p>
 <br />
@@ -121,10 +129,11 @@ This tutorial outlines the implementation of on-premises Active Directory within
 <h3>Step 5: Secure and Test the Domain Controller</h3>
 1. Secure the Domain Controller: Configure firewall rules and Network Security Groups (NSGs) in Azure to restrict access to the Domain Controller and allow only authorized users or systems to communicate with it.</p>
 
-![image](https://github.com/user-attachments/assets/7fea0cc4-a564-4946-b949-d0361d698ee1)
+![image](https://github.com/user-attachments/assets/9d7d4634-c7f7-44dc-82ff-f7448bd86b9e)
+
 
 <br />
 2. Test the Domain: Ensure that you can join other VMs or computers in the Azure environment to the domain. Test logging in with a domain account and verify that the Domain Controller is functioning as expected.</p>
 
-![image](https://github.com/user-attachments/assets/2ed2f3dc-fd78-4a3c-8eb6-cd692831dadc)
+
 
