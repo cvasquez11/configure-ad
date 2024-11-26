@@ -30,42 +30,60 @@ This tutorial outlines the implementation of on-premises Active Directory within
 4. Assign Roles and Policies: Configure role-based access control (RBAC), security policies, and conditional access settings to manage user permissions and enhance security.
 
 <h2>Deployment and Configuration Steps</h2>
-
 <p>
-  
+<h3>Step 1: Create an Azure Virtual Machine (VM)</h3>
+1. Create Virtual Machine with Windows Server: In the Azure portal, go to the "Virtual Machines" section and click on "Create a new VM". Choose a suitable Windows Server image (example -> Windows Server 2019 or 2022).</p>
+2. Configure VM settings: Select the desired region, size, network, and storage options for the VM. Ensure the VM is connected to a Virtual Network (VNet), as this will be necessary for the AD domain to communicate with other resources.</p>
+3. Assign a public IP (optional): Assign a public IP if you need remote access to the VM, or use a private IP for secure internal access.</p>
+
 ![erererer](https://github.com/user-attachments/assets/421c604e-9d96-43e7-9f55-16217cdbc536)
 
-
 <p>
-
-1. Create Azure VM: Set up an Azure VM that will act as a domain controller in your Azure portal.
-2. Install Active Directory Domain Services: On the Azure VM, install the Active Directory Domain Services role using Server Manager.
-3. Promote to Domain Controller: Run the Active Directory Domain Services Configuration Wizard to promote the VM to a domain controller, creating a new domain or adding to an existing one.
-</p>
 <br />
-
+<br />
 <p>
+<h3>Step 2: Connect to the Virtual Machine (VM)</h3>
+1. Remote Desktop Connection: After the VM is deployed, connect to it using Remote Desktop Protocol (RDP) by using the public IP or private IP (if configured with a VPN).</p>
+2. Log in with the administrator credentials you specified during the VM creation process.</p>
 
 ![cxcxcxcx](https://github.com/user-attachments/assets/3e74dd9f-0fe8-4466-82f6-a707b88b2591)
 
-
 <p>
-
-4. Configure Virtual Network: Ensure the VM is connected to a virtual network that allows communication with your on-premises network.
-5. Set Up VPN Gateway: Establish a site-to-site VPN connection between your on-premises network and Azure to enable secure communication.
-6. Configure DNS Settings: Set the Azure VM’s DNS to point to your on-premises DNS server for proper name resolution.
-</p>
 <br />
-
-<p>
-
-![lklklklk](https://github.com/user-attachments/assets/49e6ade7-695a-4e30-9afe-92525f0c21f4)
-
-
-<p>
-
-7. Test Connectivity: Verify connectivity between on-premises resources and the Azure VM to ensure the setup works correctly.
-8. Implement Replication (if needed): If adding to an existing domain, ensure Active Directory replication is functioning properly between the on-premises and Azure DC.
-9. Monitor and Maintain: Set up monitoring for the Azure VM and perform regular maintenance to ensure high availability and security of the Active Directory environment.
-</p>
 <br />
+<p>
+<h3>Step 3: Install Active Directory Domain Services (AD DS)</h3>
+1. Open Server Manager: Once logged in to the VM, open Server Manager on the Windows Server VM.</p>
+2. Add Roles and Features: In Server Manager, click on Add roles and features, select Active Directory Domain Services (AD DS) under the Roles tab, and click Next to install the role. Follow the prompts to complete the installation.</p>
+
+![image](https://github.com/user-attachments/assets/3bdf129f-b33b-4863-941f-b04cebaea7b9)
+
+<p>
+<br />
+<br />
+<p>
+<h3>Step 4: Promote the VM to a Domain Controller</h3>
+1. Promote to Domain Controller: After installing AD DS, a notification will appear in Server Manager prompting you to promote this server to a Domain Controller. Click on the link to start the configuration.</p>
+2. Choose Domain Configuration: In the wizard, select whether you are creating a new forest or adding the VM to an existing domain. If this is the first Domain Controller, choose Add a new forest and specify the Root domain name (e.g., example.com).</p>
+3. Set Directory Services Restore Mode (DSRM) Password: Provide a secure DSRM password to be used for recovery purposes.</p>
+4. Complete the Promotion: Review your selections, and click Next to begin the promotion process. The server will automatically restart to apply the changes.</p>
+
+![image](https://github.com/user-attachments/assets/240cfffc-a0e9-4c5f-b9f7-0e3a0d6ffd75)
+
+<p>
+<br />
+<br />
+<p>
+<h3>Step 5: Configure DNS Settings (VM)</h3>
+1. DNS Server Configuration: The VM should automatically configure itself as a DNS server when promoted to a Domain Controller. Ensure that DNS settings are properly configured so that the Domain Controller can resolve domain names within the network.</p>
+2. Check DNS Resolution: Test DNS resolution by pinging the domain name or checking the DNS server settings on the VM to ensure it’s properly handling domain name queries.</p>
+
+![image](https://github.com/user-attachments/assets/54864801-d3ac-40ef-94da-ef138f07fe09)
+
+<p>
+<br />
+<br />
+<p>
+<h3>Step 6: Secure and Test the Domain Controller</h3>
+1. Secure the Domain Controller: Configure firewall rules and Network Security Groups (NSGs) in Azure to restrict access to the Domain Controller and allow only authorized users or systems to communicate with it.</p>
+2. Test the Domain: Ensure that you can join other VMs or computers in the Azure environment to the domain. Test logging in with a domain account and verify that the Domain Controller is functioning as expected.</p>
